@@ -56,19 +56,24 @@ TERMS = {
     '\u7a0b\u5f0f\u78bc\u8cea\u91cf': '程式碼品質',
 }
 TERM_RE = re.compile('|'.join(map(re.escape, sorted(TERMS, key=len, reverse=True))))
-# Preserve legitimate domain wording rather than blindly replacing shared words.
-PROTECTED = ('物理質量', '原子質量', '粒子質量', '電子質量', '分子質量', '質量守恆', '資產配置', '股票代碼', '交易代碼', '證券代碼')
+# Protect ambiguous characters in already-correct Traditional Chinese context.
+PROTECTED = (
+    '物理質量', '原子質量', '粒子質量', '電子質量', '分子質量', '質量守恆',
+    '資產配置', '股票代碼', '交易代碼', '證券代碼',
+    '干擾', '干涉', '干預', '若干', '干係', '相干', '不相干',
+    '皇后', '王后', '太后', '后羿', '公里', '里程', '里長', '里民', '阿里巴巴',
+)
 
 
 def convert_run(match: re.Match) -> str:
     text = match.group()
     saved = {}
-    for index, phrase in enumerate(PROTECTED):
+    for index, phrase in enumerate(sorted(PROTECTED, key=len, reverse=True)):
         if phrase in text:
             key = f'__ZHTW_KEEP_{index}__'
             saved[key] = phrase
             text = text.replace(phrase, key)
-    text = CONVERTER.convert(text).replace('臺灣', '台灣')
+    text = CONVERTER.convert(text).replace('臺', '台')
     text = re.sub(r'(?<!演)算法', '演算法', text)
     text = TERM_RE.sub(lambda m: TERMS[m.group()], text)
     for key, phrase in saved.items():
