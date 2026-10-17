@@ -13,13 +13,17 @@ import sys
 from opencc import OpenCC
 
 ROOT = Path(__file__).resolve().parents[1]
-CONVERTER = OpenCC('s2twp')
+# Character/variant conversion only. Use reviewed, idempotent wording below;
+# blindly applying s2twp to already-Taiwanese prose can duplicate characters.
+CONVERTER = OpenCC('s2tw')
 HAN = re.compile(r'[\u3400-\u9fff]+')
 URL = re.compile(r'https?://[^\s<>\]\)\"\x27]+')
 # Keys use escapes so rule definitions themselves contain no simplified text.
 TERMS = {
     '\u751f\u547d\u5468\u671f': '生命週期',
     '\u5468\u671f': '週期',
+    '\u8edf\u4ef6': '軟體',
+    '\u786c\u4ef6': '硬體',
     '\u670d\u52d9\u5668': '伺服器',
     '\u6578\u64da\u4e2d\u5fc3': '資料中心',
     '\u6578\u64da\u5eab': '資料庫',
@@ -36,6 +40,14 @@ TERMS = {
     '\u7de9\u5b58': '快取',
     '\u7db2\u7d61': '網路',
     '\u4ee3\u78bc': '程式碼',
+    '\u64cd\u4f5c\u7cfb\u7d71': '作業系統',
+    '\u9f20\u6a19': '滑鼠',
+    '\u6253\u5370': '列印',
+    '\u5c4f\u5e55': '螢幕',
+    '\u96c6\u7fa4': '叢集',
+    '\u512a\u5316': '最佳化',
+    '\u904b\u884c': '執行',
+    '\u93c8\u63a5': '連結',
     '\u914d\u7f6e\u6587\u4ef6': '設定檔',
     '\u914d\u7f6e\u6a94': '設定檔',
     '\u8cec\u865f': '帳號',
@@ -45,7 +57,7 @@ TERMS = {
 }
 TERM_RE = re.compile('|'.join(map(re.escape, sorted(TERMS, key=len, reverse=True))))
 # Preserve legitimate domain wording rather than blindly replacing shared words.
-PROTECTED = ('物理質量', '原子質量', '粒子質量', '電子質量', '分子質量', '質量守恆', '資產配置')
+PROTECTED = ('物理質量', '原子質量', '粒子質量', '電子質量', '分子質量', '質量守恆', '資產配置', '股票代碼', '交易代碼', '證券代碼')
 
 
 def convert_run(match: re.Match) -> str:
