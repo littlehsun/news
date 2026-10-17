@@ -1,0 +1,1 @@
+{"name":"daily-brief","version":"1.0.0","private":true,"type":"module","scripts":{"test":"node --test tests/*.test.js","serve":"python3 -m http.server 8000","validate":"python3 scripts/validate.py"},"description":"Dependency-free Traditional Chinese daily briefing archive for GitHub Pages"}

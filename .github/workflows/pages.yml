@@ -1,0 +1,78 @@
+name: Deploy Daily Brief
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Validate archive structure and source links
+        run: python3 scripts/validate.py
+      - name: Test parser and safe rendering
+        run: node --test tests/*.test.js
+      - name: Build public static files
+        run: python3 scripts/build.py
+      - name: Save static preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: _site
+          include-hidden-files: true
+          retention-days: 3
+      - name: Configure Pages (enable Settings > Pages > GitHub Actions first)
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  browser:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install browser test tools
+        run: |
+          python3 -m pip install playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+          sudo apt-get install -y fonts-noto-cjk
+      - name: Test desktop, mobile and interactions
+        run: python3 scripts/browser_check.py
+      - name: Save browser screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-preview
+          path: browser-preview
+          retention-days: 3
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

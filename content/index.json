@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "timezone": "Asia/Taipei",
+  "archiveStart": "2026-10-01",
+  "missingDates": ["2026-10-02", "2026-10-07"],
+  "importNote": "Historical AI-generated conversation briefings, structurally edited rather than verbatim exports; original source URLs unavailable; no renewed fact-check. Two October 3 editions are retained separately.",
+  "editions": [
+    {"id":"2026-10-17","date":"2026-10-17","edition":"週六早報","title":"Agent 的執行邊界，與 AI 的資本成本","path":"content/2026/10/2026-10-17.md","status":"unverified_archive"},
+    {"id":"2026-10-16","date":"2026-10-16","edition":"週五早報","title":"Open-weight 再加速，市場重新計算 AI 回報","path":"content/2026/10/2026-10-16.md","status":"unverified_archive"},
+    {"id":"2026-10-15","date":"2026-10-15","edition":"週四早報","title":"強勁需求與昂貴資本，兩條不同的曲線","path":"content/2026/10/2026-10-15.md","status":"unverified_archive"},
+    {"id":"2026-10-14","date":"2026-10-14","edition":"週三早報","title":"Frontier 模型、家庭 AI 與記憶體競爭","path":"content/2026/10/2026-10-14.md","status":"unverified_archive"},
+    {"id":"2026-10-13","date":"2026-10-13","edition":"週二早報","title":"從長期記憶，到整櫃推論效率","path":"content/2026/10/2026-10-13.md","status":"unverified_archive"},
+    {"id":"2026-10-12","date":"2026-10-12","edition":"週一早報","title":"模型收購、光通訊與資金的交會點","path":"content/2026/10/2026-10-12.md","status":"unverified_archive"},
+    {"id":"2026-10-11","date":"2026-10-11","edition":"週日早報","title":"真實 Harness、本地模型與系統整合","path":"content/2026/10/2026-10-11.md","status":"unverified_archive"},
+    {"id":"2026-10-10","date":"2026-10-10","edition":"週六早報","title":"光通訊供給，與 Agent 的真實操作風險","path":"content/2026/10/2026-10-10.md","status":"unverified_archive"},
+    {"id":"2026-10-09","date":"2026-10-09","edition":"週五早報","title":"企業 Agent 入口，與 AI 營收的定義","path":"content/2026/10/2026-10-09.md","status":"unverified_archive"},
+    {"id":"2026-10-08","date":"2026-10-08","edition":"週四早報","title":"本地 Agent、OS 沙箱與記憶體供需","path":"content/2026/10/2026-10-08.md","status":"unverified_archive"},
+    {"id":"2026-10-06","date":"2026-10-06","edition":"收盤整理","title":"多極模型競爭，與 GW 級供電協議","path":"content/2026/10/2026-10-06.md","status":"unverified_archive"},
+    {"id":"2026-10-05","date":"2026-10-05","edition":"收盤整理","title":"Open-weight 回歸，電力成為交付限制","path":"content/2026/10/2026-10-05.md","status":"unverified_archive"},
+    {"id":"2026-10-04","date":"2026-10-04","edition":"週日早報","title":"安全、開放與 AI 投資的回收時間","path":"content/2026/10/2026-10-04.md","status":"unverified_archive"},
+    {"id":"2026-10-03-v2","date":"2026-10-03","edition":"第二版","title":"企業 AI 缺的不是模型，而是部署能力","path":"content/2026/10/2026-10-03-v2.md","status":"unverified_archive"},
+    {"id":"2026-10-03-v1","date":"2026-10-03","edition":"第一版","title":"長時程 Agent、光子記憶體與就業降溫","path":"content/2026/10/2026-10-03-v1.md","status":"unverified_archive"},
+    {"id":"2026-10-01","date":"2026-10-01","edition":"收盤整理","title":"AI 的瓶頸，正在離開 GPU 本身","path":"content/2026/10/2026-10-01.md","status":"unverified_archive"}
+  ]
+}
