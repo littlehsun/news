@@ -57,3 +57,9 @@ Links in persisted Markdown must be ordinary `[source title](https://actual-sour
 A routine daily news run may modify only `content/**` and correction metadata needed for that edition. Do not edit frontend, Actions, repository settings, branch policies or unrelated repos unless specifically asked. Never use a scheduled task to silently rewrite older unverified content into apparently verified history.
 
 GitHub Actions validates and deploys the static site after a main push. It does not generate news or provide credentials. Initial Settings → Pages → GitHub Actions enablement is a separate repository-admin action.
+
+## 台灣繁體中文規範
+
+網站介面、README、新聞全文、標題、索引及發稿範本一律使用繁體中文與台灣慣用詞。使用軟體、硬體、伺服器、網路、記憶體、快取、程式碼、資料庫、演算法、生命週期等用語；英文產品名稱、模型識別碼、程式碼與真實來源網址保持原樣。不能只轉換字形而忽略上下文；例如物理質量與資產配置應保留其原意。
+
+發布前執行 `python3 -m pip install -r requirements-dev.txt`、`python3 scripts/check_locale.py`、`python3 scripts/test_locale.py`，再執行原有內容與前端測試。CI 會阻擋未通過用語檢查的內容。自動檢查是輔助工具，仍需人工校閱，不是事實查核。歷史稿僅校正文字，不修改事件、數字或來源查核狀態。

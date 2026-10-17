@@ -69,7 +69,7 @@ try:
         assert 'story=markets-1' in page.url
         page.locator('#close').click()
         checks.append('GitHub Pages subpath + deep-link + reader navigation')
-        page.locator('#theme').click()
+        page.locator('[data-theme-choice="dark"]').click()
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
         page.screenshot(path=str(OUTPUT / 'dark.png'))
         page.reload(wait_until='networkidle')
