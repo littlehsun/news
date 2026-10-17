@@ -21,6 +21,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Install language checker
+        run: python3 -m pip install -r requirements-dev.txt
+      - name: Check Taiwanese Traditional Chinese
+        run: |
+          python3 scripts/check_locale.py
+          python3 scripts/test_locale.py
       - name: Validate archive structure and source links
         run: python3 scripts/validate.py
       - name: Test parser and safe rendering
@@ -54,7 +60,9 @@ jobs:
           python3 -m playwright install --with-deps chromium
           sudo apt-get install -y fonts-noto-cjk
       - name: Test desktop, mobile and interactions
-        run: python3 scripts/browser_check.py
+        run: |
+          python3 scripts/browser_check.py
+          python3 scripts/theme_browser_check.py
       - name: Save browser screenshots and results
         if: always()
         uses: actions/upload-artifact@v4
