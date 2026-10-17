@@ -71,5 +71,9 @@ test('HTML uses subpath-safe assets and no external executable dependencies', ()
   assert.ok(html.includes('Content-Security-Policy'));
   assert.ok(!/src="https?:/.test(html));
   assert.ok(!/href="\/assets\//.test(html));
-  assert.ok(html.includes('lang="zh-Hant"'));
+  assert.ok(html.includes('lang="zh-Hant-TW"'));
+  assert.ok(html.indexOf('assets/theme.js') < html.indexOf('assets/style.css'));
+  for (const choice of ['light', 'dark', 'system']) {
+    assert.ok(html.includes(`data-theme-choice="${choice}"`));
+  }
 });

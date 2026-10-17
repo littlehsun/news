@@ -24,23 +24,39 @@ jobs:
         run: |
           python3 scripts/prepare_zh_tw.py
           rm scripts/prepare_zh_tw.py .github/workflows/prepare-zh-tw.yml
-      - name: Validate all changes
+      - name: Check Taiwanese language and archive structure
         run: |
           python3 scripts/check_locale.py
           python3 scripts/test_locale.py
           python3 scripts/validate.py
-          node --test tests/*.test.js
+      - name: Run parser and theme unit tests
+        run: node --test tests/*.test.js
+      - name: Test desktop and mobile browser interactions
+        run: |
           python3 scripts/browser_check.py
           python3 scripts/theme_browser_check.py
-          python3 scripts/build.py
+      - name: Build verified static site
+        run: python3 scripts/build.py
       - name: Commit only the requested changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add README.md AGENTS.md PUBLISHING.md index.html assets content templates scripts .github/workflows
           git commit -m 'fix: normalize archive to Taiwanese Traditional Chinese and finalize theme controls'
-          git push origin HEAD:refs/heads/chore/zh-tw-theme
           git archive --format=zip HEAD -o source-preview.zip
+          git push origin HEAD:refs/heads/chore/zh-tw-theme
+      - name: Save source for review even if a test fails
+        if: always()
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess, zipfile
+          with zipfile.ZipFile('worktree-preview.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+              for name in subprocess.check_output(['git','ls-files'], text=True).splitlines():
+                  if Path(name).is_file():
+                      z.write(name)
+          PY
+          python3 -m pip download --no-deps -d ci-tools -r requirements-dev.txt
       - name: Save verified source and browser previews
         if: always()
         uses: actions/upload-artifact@v4
@@ -48,5 +64,7 @@ jobs:
           name: zh-tw-theme-preview
           path: |
             source-preview.zip
+            worktree-preview.zip
+            ci-tools/
             browser-preview/
           retention-days: 3
