@@ -8,6 +8,7 @@ from threading import Thread
 from playwright.sync_api import sync_playwright, expect
 
 ROOT = Path(__file__).resolve().parents[1]
+MANIFEST = json.loads((ROOT / 'content/index.json').read_text(encoding='utf-8'))
 OUTPUT = ROOT / 'browser-preview'
 OUTPUT.mkdir(exist_ok=True)
 handler = partial(SimpleHTTPRequestHandler, directory=str(ROOT.parent))
@@ -52,10 +53,10 @@ try:
         expect(page.locator('.story')).to_have_count(1)
         checks.append('bookmarks persist across reload')
         page.locator('[data-view="archive"]').click()
-        expect(page.locator('.archive-card')).to_have_count(18)
-        expect(page.locator('.archive-card.missing')).to_have_count(2)
+        expect(page.locator('.archive-card')).to_have_count(len(MANIFEST['editions']) + len(MANIFEST.get('missingDates', [])))
+        expect(page.locator('.archive-card.missing')).to_have_count(len(MANIFEST.get('missingDates', [])))
         page.screenshot(path=str(OUTPUT / 'archive.png'))
-        checks.append('16 editions + 2 explicit missing dates')
+        checks.append(f"{len(MANIFEST['editions'])} editions + {len(MANIFEST.get('missingDates', []))} explicit missing dates")
         page.locator('#search').fill('vLLM')
         expect(page.locator('#feed-title')).to_have_text('搜尋結果')
         expect(page.locator('.story').first).to_be_visible()
@@ -75,6 +76,24 @@ try:
         page.reload(wait_until='networkidle')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
         checks.append('theme persistence')
+        for meta in MANIFEST['editions']:
+            if meta.get('provenance') != 'retrospective_reconstruction':
+                continue
+            page.goto(BASE + '?edition=' + meta['id'], wait_until='networkidle')
+            expect(page.locator('.story')).to_have_count(20)
+            expect(page.locator('.highlight')).to_have_count(3)
+            expect(page.locator('#edition-meta')).to_contain_text('補刊')
+            expect(page.locator('#edition-meta')).to_contain_text('附公開來源')
+            page.locator('.story-title').first.click()
+            expect(page.locator('#reader-date')).to_contain_text('補刊')
+            expect(page.locator('#reader-body .field')).to_have_count(4)
+            assert page.locator('#reader-body a[href^="https://"]').count() >= 1
+            page.locator('#close').click()
+            page.locator('#read-all').click()
+            expect(page.locator('#reader-body')).to_contain_text('不是原始簡報的復原')
+            expect(page.locator('#reader-body')).to_contain_text(meta['backfilledAt'])
+            page.locator('#close').click()
+        checks.append('backfilled editions: 20 stories, source links and visible retrospective date')
         mobile_context = browser.new_context(viewport={'width': 390, 'height': 844}, device_scale_factor=1, is_mobile=True, has_touch=True, reduced_motion='reduce')
         mobile = mobile_context.new_page()
         mobile.on('pageerror', lambda e: errors.append(str(e)))
