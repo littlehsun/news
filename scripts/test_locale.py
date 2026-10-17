@@ -8,9 +8,12 @@ class LocaleTests(unittest.TestCase):
     def test_taiwan_terms(self):
         self.assertEqual(normalize('\u751f\u547d\u5468\u671f\u548c\u6578\u64da\u5eab'), '生命週期和資料庫')
     def test_keep_shared_words(self):
-        text = '演算法、資產配置、物理質量、干擾、台灣、NVIDIA、vLLM、42B、15%'
+        text = '演算法、資產配置、物理質量、干擾、台灣、只看、只以、發布、公布、資金回流、NVIDIA、vLLM、42B、15%'
         self.assertEqual(normalize(text), text)
         self.assertEqual(normalize(normalize(text)), text)
+    def test_reviewed_taiwan_wording(self):
+        self.assertEqual(normalize('芯片、用戶、模型支持、風險上報、閉環'),
+                         '晶片、使用者、模型支援、風險通報、閉迴路')
     def test_keep_urls_and_identifiers(self):
         text = 'https://example.com/\u65b0\u95fb?mode=dark model_id=Qwen3 api/v1'
         self.assertEqual(normalize(text), text)

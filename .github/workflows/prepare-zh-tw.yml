@@ -37,11 +37,12 @@ jobs:
           python3 scripts/theme_browser_check.py
       - name: Build verified static site
         run: python3 scripts/build.py
-      - name: Commit only the requested changes
+      - name: Commit validated site and content without workflow changes
         run: |
+          git restore .github/workflows
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add README.md AGENTS.md PUBLISHING.md index.html assets content templates scripts .github/workflows
+          git add README.md AGENTS.md PUBLISHING.md index.html assets content templates scripts
           git commit -m 'fix: normalize archive to Taiwanese Traditional Chinese and finalize theme controls'
           git archive --format=zip HEAD -o source-preview.zip
           git push origin HEAD:refs/heads/chore/zh-tw-theme

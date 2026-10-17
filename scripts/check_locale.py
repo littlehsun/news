@@ -56,6 +56,8 @@ TERMS = {
     '\u56fa\u4ef6': '韌體',
     '\u4e92\u806f\u7db2': '網際網路',
     '\u6a21\u578b\u652f\u6301': '模型支援',
+    '\u9589\u74b0': '閉迴路',
+    '\u53ef\u80fd\u5148\u843d\u5730': '可能率先應用',
     '\u98a8\u96aa\u4e0a\u5831': '風險通報',
     '\u63aa\u65bd\u843d\u5730': '措施實施',
     '\u914d\u7f6e\u6587\u4ef6': '設定檔',
@@ -72,6 +74,8 @@ PROTECTED = (
     '資產配置', '股票代碼', '交易代碼', '證券代碼',
     '干擾', '干涉', '干預', '若干', '干係', '相干', '不相干',
     '皇后', '王后', '太后', '后羿', '公里', '里程', '里長', '里民', '阿里巴巴',
+    '只以', '只看', '只是', '只要', '只會', '只有', '只用', '只能', '不只',
+    '發布', '公布', '宣布', '分布', '散布', '遍布', '布局', '回流',
 )
 
 
@@ -84,6 +88,10 @@ def convert_run(match: re.Match) -> str:
             saved[key] = phrase
             text = text.replace(phrase, key)
     text = CONVERTER.convert(text).replace('臺', '台')
+    for old, new in (('隻以', '只以'), ('隻看', '只看'), ('迴流', '回流'),
+                     ('發佈', '發布'), ('公佈', '公布'), ('宣佈', '宣布'),
+                     ('分佈', '分布'), ('散佈', '散布'), ('遍佈', '遍布'), ('佈局', '布局')):
+        text = text.replace(old, new)
     text = re.sub(r'(?<!演)算法', '演算法', text)
     text = TERM_RE.sub(lambda m: TERMS[m.group()], text)
     for key, phrase in saved.items():
