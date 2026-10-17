@@ -42,6 +42,26 @@ jobs:
         with:
           path: _site
 
+  browser:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install browser test tools
+        run: |
+          python3 -m pip install playwright==1.56.0
+          python3 -m playwright install --with-deps chromium
+          sudo apt-get install -y fonts-noto-cjk
+      - name: Test desktop, mobile and interactions
+        run: python3 scripts/browser_check.py
+      - name: Save browser screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-preview
+          path: browser-preview
+          retention-days: 3
+
   deploy:
     if: github.event_name != 'pull_request'
     needs: build
