@@ -6,6 +6,14 @@
   "importNote": "Historical AI-generated conversation briefings, structurally edited rather than verbatim exports; original source URLs unavailable; no renewed fact-check. Two October 3 editions are retained separately. Oct 2 and Oct 7 were separately backfilled on 2026-10-17 with newly researched public sources, not recovered original newsletters; these are clearly labeled retrospective editions.",
   "editions": [
     {
+      "id": "2026-10-18",
+      "date": "2026-10-18",
+      "edition": "週日早報",
+      "title": "AI Agent 的效率與治理，碰上晶片財報與資本成本考驗",
+      "path": "content/2026/10/2026-10-18.md",
+      "status": "sourced"
+    },
+    {
       "id": "2026-10-17",
       "date": "2026-10-17",
       "edition": "週六早報",
