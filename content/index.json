@@ -6,6 +6,14 @@
   "importNote": "Historical AI-generated conversation briefings, structurally edited rather than verbatim exports; original source URLs unavailable; no renewed fact-check. Two October 3 editions are retained separately. Oct 2 and Oct 7 were separately backfilled on 2026-10-17 with newly researched public sources, not recovered original newsletters; these are clearly labeled retrospective editions.",
   "editions": [
     {
+      "id": "2026-10-19",
+      "date": "2026-10-19",
+      "edition": "週一早報",
+      "title": "模型退役期限與 AI 基礎設施的資本、能源考驗",
+      "path": "content/2026/10/2026-10-19.md",
+      "status": "sourced"
+    },
+    {
       "id": "2026-10-18",
       "date": "2026-10-18",
       "edition": "週日早報",
