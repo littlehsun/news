@@ -38,9 +38,14 @@ try:
         expect(page.locator('html')).to_have_attribute('lang', 'zh-Hant-TW')
         expect(page.locator('html')).to_have_attribute('data-theme-preference', 'system')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
-        expect(page.locator('[data-theme-choice="system"]')).to_be_hidden()
+        expect(page.locator('[data-theme-choice="system"]')).to_be_visible()
+        expect(page.locator('[data-theme-choice="system"]')).to_have_attribute('aria-pressed', 'true')
         for choice in ('light', 'dark', 'system'):
+            bounds = page.locator('#theme').bounding_box()
             choose_theme(page, choice)
+            expect(page.locator('[data-theme-choice="system"]')).to_be_visible()
+            expect(page.locator('[data-theme-choice="system"]')).to_have_attribute('aria-pressed', str(choice == 'system').lower())
+            assert page.locator('#theme').bounding_box() == bounds
             expect(page.locator('html')).to_have_attribute('data-theme-preference', choice)
             expect(page.locator('[data-theme-toggle]')).to_have_attribute('aria-checked', str(page.locator('html').get_attribute('data-theme') == 'dark').lower())
             page.reload(wait_until='networkidle')

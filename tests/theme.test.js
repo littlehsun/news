@@ -42,7 +42,8 @@ test('first visit follows system and switch reflects actual color before DOM rea
     assert.equal(app.root.dataset.theme, dark ? 'dark' : 'light');
     app.ready();
     assert.equal(app.toggle.attributes['aria-checked'], String(dark));
-    assert.equal(app.reset.hidden, true);
+    assert.equal(app.reset.hidden, false);
+    assert.equal(app.reset.attributes['aria-pressed'], 'true');
     assert.equal(app.values.has('brief-theme'), false);
   }
 });
@@ -52,20 +53,22 @@ test('toggle chooses the opposite actual color and persists manual preference', 
   assert.equal(app.root.dataset.theme, 'light');
   assert.equal(app.values.get('brief-theme'), 'light');
   assert.equal(app.reset.hidden, false);
+  assert.equal(app.reset.attributes['aria-pressed'], 'false');
   app.click(); app.system(false);
   assert.equal(app.root.dataset.theme, 'dark');
   assert.equal(app.values.get('brief-theme'), 'dark');
   assert.equal(app.meta.content, '#171b25');
   assert.equal(app.toggle.attributes['aria-checked'], 'true');
 });
-test('monitor restores live system changes and hides itself', () => {
+test('monitor stays visible and indicates when live system colors are selected', () => {
   const app = setup({ stored: 'dark' });
   app.follow(); app.system(false);
   assert.equal(app.root.dataset.theme, 'light');
   app.system(true);
   assert.equal(app.root.dataset.theme, 'dark');
   assert.equal(app.toggle.attributes['aria-checked'], 'true');
-  assert.equal(app.reset.hidden, true);
+  assert.equal(app.reset.hidden, false);
+    assert.equal(app.reset.attributes['aria-pressed'], 'true');
   assert.equal(app.values.get('brief-theme'), 'system');
 });
 test('existing choices are restored and invalid storage falls back safely', () => {
@@ -87,5 +90,6 @@ test('cross-tab storage changes and clearing storage update the switch', () => {
   app.storage('light', 'brief-saved'); assert.equal(app.root.dataset.theme, 'dark');
   app.storage(null, null); assert.equal(app.root.dataset.themePreference, 'system');
   assert.equal(app.root.dataset.theme, 'dark');
-  assert.equal(app.reset.hidden, true);
+  assert.equal(app.reset.hidden, false);
+    assert.equal(app.reset.attributes['aria-pressed'], 'true');
 });

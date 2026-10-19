@@ -9,7 +9,7 @@
 .theme-toggle[aria-checked=true] .theme-sun{color:var(--muted)}.theme-toggle[aria-checked=true] .theme-moon{color:var(--ink)}
 .theme-toggle:hover .theme-track{border-color:var(--green)}
 .theme-system{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:10px;color:var(--muted);border-radius:50%}
-.theme-system svg{width:20px;height:20px}.theme-system:hover{color:var(--green);background:var(--soft)}
+.theme-system svg{width:20px;height:20px}.theme-system[aria-pressed=true],.theme-system:hover{color:var(--green);background:var(--soft)}
 @media(prefers-reduced-motion:reduce){.theme-thumb,.theme-track svg{transition:none}}
 @media(prefers-color-scheme:dark){
   :root:not([data-theme]){--bg:#171b25;--panel:#1e2431;--ink:#eef0f7;--muted:#acb4c6;--line:#394153;--green:#b2c1ff;--soft:#29334c;--accent:#f0b59b;--on-accent:#171b25;--feature:#2c407d;--feature-text:#ffffff;--feature-muted:#e0e7ff;--shadow:0 24px 80px #0006;--ai:#b2c1ff;--tech:#8dced8;--markets:#e8c18d;--business:#d7afe0;color-scheme:dark}

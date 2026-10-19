@@ -21,7 +21,7 @@
       toggle.title = `${preference === 'system' ? '跟隨系統顏色' : '手動設定'}；切換至${theme === 'dark' ? '淺色' : '深色'}模式`;
     }
     const reset = document.querySelector('[data-theme-choice="system"]');
-    if (reset) reset.hidden = preference === 'system';
+    if (reset) reset.setAttribute('aria-pressed', String(preference === 'system'));
   }
 
   function select(value) {
