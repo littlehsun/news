@@ -15,11 +15,13 @@
     root.dataset.themePreference = preference;
     const color = document.querySelector('meta[name="theme-color"]');
     if (color) color.content = theme === 'dark' ? '#171b25' : '#f8f7f4';
-    document.querySelectorAll('[data-theme-choice]').forEach(button => {
-      const selected = button.dataset.themeChoice === preference;
-      button.setAttribute('aria-pressed', String(selected));
-      button.classList.toggle('selected', selected);
-    });
+    const toggle = document.querySelector('[data-theme-toggle]');
+    if (toggle) {
+      toggle.setAttribute('aria-checked', String(theme === 'dark'));
+      toggle.title = `${preference === 'system' ? '跟隨系統顏色' : '手動設定'}；切換至${theme === 'dark' ? '淺色' : '深色'}模式`;
+    }
+    const reset = document.querySelector('[data-theme-choice="system"]');
+    if (reset) reset.hidden = preference === 'system';
   }
 
   function select(value) {
@@ -31,6 +33,10 @@
   render();
   document.addEventListener('DOMContentLoaded', render, { once: true });
   document.addEventListener('click', event => {
+    if (event.target.closest('[data-theme-toggle]')) {
+      select(root.dataset.theme === 'dark' ? 'light' : 'dark');
+      return;
+    }
     const button = event.target.closest('[data-theme-choice]');
     if (button) select(button.dataset.themeChoice);
   });

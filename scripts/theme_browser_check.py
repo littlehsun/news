@@ -14,6 +14,19 @@ server = ThreadingHTTPServer(('127.0.0.1', 0), partial(SimpleHTTPRequestHandler,
 Thread(target=server.serve_forever, daemon=True).start()
 BASE = f'http://127.0.0.1:{server.server_port}/{ROOT.name}/'
 errors, checks = [], []
+def choose_theme(page, choice):
+    root = page.locator('html')
+    switch = page.locator('[data-theme-toggle]')
+    if choice == 'system':
+        reset = page.locator('[data-theme-choice="system"]')
+        if reset.is_visible():
+            reset.click()
+    else:
+        if root.get_attribute('data-theme') == choice and root.get_attribute('data-theme-preference') != choice:
+            switch.click()
+        if root.get_attribute('data-theme') != choice:
+            switch.click()
+
 try:
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -25,9 +38,11 @@ try:
         expect(page.locator('html')).to_have_attribute('lang', 'zh-Hant-TW')
         expect(page.locator('html')).to_have_attribute('data-theme-preference', 'system')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
+        expect(page.locator('[data-theme-choice="system"]')).to_be_hidden()
         for choice in ('light', 'dark', 'system'):
-            page.locator(f'[data-theme-choice="{choice}"]').click()
-            expect(page.locator(f'[data-theme-choice="{choice}"]')).to_have_attribute('aria-pressed', 'true')
+            choose_theme(page, choice)
+            expect(page.locator('html')).to_have_attribute('data-theme-preference', choice)
+            expect(page.locator('[data-theme-toggle]')).to_have_attribute('aria-checked', str(page.locator('html').get_attribute('data-theme') == 'dark').lower())
             page.reload(wait_until='networkidle')
             expect(page.locator('html')).to_have_attribute('data-theme-preference', choice)
         page.emulate_media(color_scheme='light')
@@ -36,16 +51,16 @@ try:
         page.emulate_media(color_scheme='dark')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
         page.screenshot(path=str(OUTPUT / 'theme-system-dark.png'))
-        page.locator('[data-theme-choice="light"]').click()
+        choose_theme(page, 'light')
         page.emulate_media(color_scheme='dark')
         expect(page.locator('html')).to_have_attribute('data-theme', 'light')
-        page.locator('[data-theme-choice="dark"]').focus()
+        page.locator('[data-theme-toggle]').focus()
         page.keyboard.press('Enter')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
-        checks.append('three choices, reload persistence, live system changes and keyboard access')
+        checks.append('sun/moon switch, system reset, reload persistence, live system changes and keyboard access')
         page2 = context.new_page()
         page2.goto(BASE, wait_until='networkidle')
-        page2.locator('[data-theme-choice="light"]').click()
+        choose_theme(page2, 'light')
         expect(page.locator('html')).to_have_attribute('data-theme', 'light')
         checks.append('theme selection synchronizes across browser tabs')
         mobile_context = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True, color_scheme='dark')
@@ -53,9 +68,9 @@ try:
         mobile.on('pageerror', lambda error: errors.append(str(error)))
         mobile.goto(BASE, wait_until='networkidle')
         mobile.locator('#menu').click()
-        mobile.locator('[data-theme-choice="light"]').click()
+        choose_theme(mobile, 'light')
         expect(mobile.locator('html')).to_have_attribute('data-theme', 'light')
-        mobile.locator('[data-theme-choice="system"]').click()
+        choose_theme(mobile, 'system')
         expect(mobile.locator('html')).to_have_attribute('data-theme', 'dark')
         assert mobile.evaluate('innerWidth === document.documentElement.scrollWidth')
         mobile.screenshot(path=str(OUTPUT / 'theme-mobile.png'))
@@ -66,7 +81,7 @@ try:
         restricted.on('pageerror', lambda error: errors.append(str(error)))
         restricted.goto(BASE, wait_until='networkidle')
         expect(restricted.locator('.story')).to_have_count(20)
-        restricted.locator('[data-theme-choice="light"]').click()
+        choose_theme(restricted, 'light')
         expect(restricted.locator('html')).to_have_attribute('data-theme', 'light')
         checks.append('disabled localStorage does not break page or theme switching')
         assert not errors, errors

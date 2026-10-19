@@ -18,6 +18,19 @@ manifest = json.loads((ROOT / 'content/index.json').read_text())
 errors = []
 checks = []
 
+def choose_theme(page, choice):
+    root = page.locator('html')
+    switch = page.locator('[data-theme-toggle]')
+    if choice == 'system':
+        reset = page.locator('[data-theme-choice="system"]')
+        if reset.is_visible():
+            reset.click()
+    else:
+        if root.get_attribute('data-theme') == choice and root.get_attribute('data-theme-preference') != choice:
+            switch.click()
+        if root.get_attribute('data-theme') != choice:
+            switch.click()
+
 try:
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
@@ -28,11 +41,11 @@ try:
         expect(page.locator('.story')).to_have_count(20)
         expect(page.locator('.highlight')).to_have_count(3)
         for theme in ('light', 'dark'):
-            page.locator(f'[data-theme-choice="{theme}"]').click()
+            choose_theme(page, theme)
             styles = page.locator('.highlight').evaluate_all('(els) => els.map(el => {const s = getComputedStyle(el); return [s.backgroundColor, s.color, el.getBoundingClientRect().width]})')
             assert styles[0][:2] == styles[1][:2] == styles[2][:2], styles
             assert max(s[2] for s in styles) - min(s[2] for s in styles) < 1, styles
-        page.locator('[data-theme-choice="light"]').click()
+        choose_theme(page, 'light')
         checks.append('20 stories, 3 highlights with equal color and width in both themes')
         expect(page.locator('.avatar')).to_have_js_property('naturalWidth', 160)
         expect(page.locator('.brand-icon, .masthead-mark')).to_have_count(0)
@@ -79,9 +92,9 @@ try:
         page.locator('#archive-zoom').press('Home')
         page.keyboard.press('ArrowRight')
         page.screenshot(path=str(OUTPUT / 'archive.png'))
-        page.locator('[data-theme-choice="dark"]').click()
+        choose_theme(page, 'dark')
         page.screenshot(path=str(OUTPUT / 'archive-dark.png'))
-        page.locator('[data-theme-choice="light"]').click()
+        choose_theme(page, 'light')
         page.locator('[data-edition="2026-10-03"]').click()
         expect(page.locator('#edition-select')).to_have_value('2026-10-03')
         expect(page.locator('.story')).to_have_count(20)
@@ -108,7 +121,7 @@ try:
         expect(page.locator('#reader')).not_to_be_visible()
         expect(page.locator('#edition-select')).to_have_value('2026-10-03')
         checks.append('old second-edition links still work; archived first-edition stories are not silently substituted')
-        page.locator('[data-theme-choice="dark"]').click()
+        choose_theme(page, 'dark')
         expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
         page.screenshot(path=str(OUTPUT / 'dark.png'))
         page.reload(wait_until='networkidle')

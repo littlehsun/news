@@ -1,12 +1,16 @@
-/* Theme controls share the same semantic palette as the reading surface. */
-.theme-picker{border:0;margin:0;padding:0;min-width:0}
-.theme-picker legend{font-size:11px;color:var(--muted);margin-bottom:6px;padding:0}
-.theme-options{display:flex;gap:2px;padding:3px;background:var(--panel);border:1px solid var(--line);border-radius:6px}
-.theme-options button{min-width:44px;min-height:44px;padding:5px 10px;border-radius:3px;font-size:12px;white-space:nowrap;color:var(--muted)}
-.theme-options button:hover{background:var(--soft);color:var(--ink)}
-.theme-options button[aria-pressed=true]{background:var(--green);color:var(--on-accent);font-weight:650}
-.theme-options button:focus-visible{outline-offset:1px}
-@media(max-width:850px){.theme-options{display:grid;grid-template-columns:1fr 1fr 1.4fr}}
+/* The thumb reflects the resolved color; a monitor restores the system preference. */
+.theme-picker{display:flex;align-items:center;gap:4px;min-height:44px}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:80px;min-height:44px;padding:2px;border-radius:24px}
+.theme-track{position:relative;display:block;width:76px;height:38px;border:1px solid var(--line);border-radius:24px;background:var(--soft)}
+.theme-thumb{position:absolute;top:3px;left:3px;width:30px;height:30px;border-radius:50%;background:var(--panel);box-shadow:0 1px 4px #0002;transition:transform .2s ease}
+.theme-track svg{position:absolute;top:9px;width:18px;height:18px;z-index:1;transition:color .2s ease}
+.theme-sun{left:9px;color:var(--ink)}.theme-moon{right:9px;color:var(--muted)}
+.theme-toggle[aria-checked=true] .theme-thumb{transform:translateX(38px)}
+.theme-toggle[aria-checked=true] .theme-sun{color:var(--muted)}.theme-toggle[aria-checked=true] .theme-moon{color:var(--ink)}
+.theme-toggle:hover .theme-track{border-color:var(--green)}
+.theme-system{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:10px;color:var(--muted);border-radius:50%}
+.theme-system svg{width:20px;height:20px}.theme-system:hover{color:var(--green);background:var(--soft)}
+@media(prefers-reduced-motion:reduce){.theme-thumb,.theme-track svg{transition:none}}
 @media(prefers-color-scheme:dark){
   :root:not([data-theme]){--bg:#171b25;--panel:#1e2431;--ink:#eef0f7;--muted:#acb4c6;--line:#394153;--green:#b2c1ff;--soft:#29334c;--accent:#f0b59b;--on-accent:#171b25;--feature:#2c407d;--feature-text:#ffffff;--feature-muted:#e0e7ff;--shadow:0 24px 80px #0006;--ai:#b2c1ff;--tech:#8dced8;--markets:#e8c18d;--business:#d7afe0;color-scheme:dark}
 }
