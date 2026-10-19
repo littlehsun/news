@@ -50,7 +50,7 @@ test('explicit themes persist and are not overridden by system changes', () => {
   assert.equal(app.values.get('brief-theme'), 'light');
   app.click('dark'); app.system(false);
   assert.equal(app.root.dataset.theme, 'dark');
-  assert.equal(app.meta.content, '#121a17');
+  assert.equal(app.meta.content, '#171b25');
   assert.equal(app.buttons.filter(b => b.attributes['aria-pressed'] === 'true').length, 1);
 });
 test('system mode reacts immediately and remains system in storage', () => {

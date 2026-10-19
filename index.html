@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="每日讀懂 AI、科技硬體、台美股與全球商業。四大主題，二十則重點，持續追蹤值得關注的變化。">
-<meta name="theme-color" content="#f7f8f4"><meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f8f7f4"><meta name="color-scheme" content="light dark">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta property="og:title" content="Daily Brief｜每日科技簡報"><meta property="og:description" content="AI、科技與市場，每天讀懂一點。"><meta property="og:type" content="website">
 <title>Daily Brief｜每日科技簡報</title>
 <script src="assets/theme.js"></script>
-<link rel="icon" href="assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="assets/avatar.png" type="image/png"><link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/theme.css">
 <script type="module" src="assets/app.js"></script>
 </head>
@@ -16,29 +16,33 @@
 <a class="skip" href="#main">跳至內容</a>
 <div class="shade" id="shade" hidden></div>
 <aside class="sidebar" id="sidebar" aria-label="主要導覽">
-<a class="brand" href="./"><span class="brand-icon" aria-hidden="true">b<span>.</span></span><span>daily brief<small>科技・市場・洞察</small></span></a>
+<a class="brand" href="./"><img class="avatar" src="assets/avatar.png" width="44" height="44" alt=""><span>每日簡報<small>littlehsun · 科技與市場</small></span></a>
 <p class="nav-caption">每天一點新觀點</p>
-<nav class="main-nav"><button data-view="daily" class="active"><span aria-hidden="true">▦</span>每日簡報<span class="tiny-dot"></span></button><button data-view="archive"><span aria-hidden="true">▤</span>歷史簡報</button><button data-view="saved"><span aria-hidden="true">☆</span>我的收藏<span id="saved-count" class="nav-count">0</span></button></nav>
+<nav class="main-nav"><button data-view="daily" class="active"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>每日簡報<span class="tiny-dot"></span></button><button data-view="archive"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>歷史簡報</button><button data-view="saved"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>我的收藏<span id="saved-count" class="nav-count">0</span></button></nav>
 <div class="side-section"><p class="nav-caption">四大主題</p><button data-cat="ai"><i class="dot ai"></i>AI 與開發工具</button><button data-cat="tech"><i class="dot tech"></i>科技硬體與網路</button><button data-cat="markets"><i class="dot markets"></i>台美股與市場</button><button data-cat="business"><i class="dot business"></i>全球科技與商業</button></div>
 <div class="archive-note"><span class="little-label">多一點脈絡</span><p>不只是知道發生什麼，<br>也理解為什麼重要。</p><small>摘要 · 影響 · 二階效應 · 判讀</small></div>
 <div class="sidebar-bottom"><a href="https://github.com/littlehsun/news" target="_blank" rel="noopener noreferrer">↗ GitHub / news</a><div><span>台灣時間</span></div><fieldset id="theme" class="theme-picker"><legend>顯示主題</legend><div class="theme-options" role="group" aria-label="顯示主題"><button type="button" data-theme-choice="light" aria-pressed="false">淺色</button><button type="button" data-theme-choice="dark" aria-pressed="false">深色</button><button type="button" data-theme-choice="system" aria-pressed="true">跟隨系統</button></div></fieldset></div>
 </aside>
 <div class="workspace">
-<header class="topbar"><button id="menu" class="icon-button menu-button" aria-label="開啟導覽" aria-expanded="false" aria-controls="sidebar">☰</button><span class="topbar-label">讀重點，也讀懂脈絡。</span><label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜尋新聞、公司或關鍵字" autocomplete="off" aria-label="搜尋所有簡報"><kbd>/</kbd></label></header>
+<header class="topbar"><button id="menu" class="icon-button menu-button" aria-label="開啟導覽" aria-expanded="false" aria-controls="sidebar">☰</button><span class="topbar-label">科技・市場・洞察 <span aria-hidden="true">/</span> 讀重點，也讀懂脈絡。</span><label class="search-box"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="搜尋新聞、公司或關鍵字" autocomplete="off" aria-label="搜尋所有簡報"><kbd>/</kbd></label></header>
 <main id="main" tabindex="-1">
-<section class="masthead"><div><p class="eyebrow">每日科技與市場簡報</p><h1 id="page-title">每天，讀懂重要的事。</h1><p id="page-subtitle" class="muted">從 AI 到全球市場，整理值得你花時間的資訊。</p></div><div class="masthead-mark" aria-hidden="true">讀<span>每日精選</span></div></section>
+<section class="masthead"><div><p class="eyebrow">每日科技與市場簡報</p><h1 id="page-title">每天，讀懂重要的事。</h1><p id="page-subtitle" class="muted">從 AI 到全球市場，整理值得你花時間的資訊。</p></div><div class="masthead-note"><span>四大主題 / 每日精選</span><p>少一點雜訊，<br>多一點理解。</p></div></section>
 <div class="status-banner" id="status-banner"><span aria-hidden="true">ⓘ</span><p><strong>歷史 AI 簡報整理</strong>　10/1–10/17 內容由原對話整理，尚未重新查核；原引用無法還原為公開連結。請勿視為即時行情或已驗證報導。</p><button id="about" aria-label="閱讀來源說明">來源說明 ↗</button></div>
 <div id="loading" role="status" class="loading"><span class="loading-dot"></span>正在載入簡報…</div><div id="error" role="alert" class="empty" hidden></div>
 <div id="app-content" hidden>
 <section id="daily-head"><div class="edition-bar"><div><span class="label">本期簡報</span><h2 id="edition-date"></h2><p class="muted" id="edition-meta"></p></div><div class="edition-actions"><button id="prev" class="icon-button" title="上一期" aria-label="上一期">←</button><label class="sr-only" for="edition-select">選擇簡報日期及版本</label><select id="edition-select"></select><button id="next" class="icon-button" title="下一期" aria-label="下一期">→</button></div></div>
 <div class="section-heading"><h2>今日最重要的 <em>3</em> 件事</h2><span class="label">掌握今日重點</span></div><div id="highlights" class="highlights"></div></section>
-<section id="archive-panel" hidden><div class="section-heading"><h2>每一天，都有脈絡。</h2><span id="archive-stats" class="label"></span></div><p class="muted">保留每期版本。灰色日期表示原對話沒有提供內容，沒有自動補稿。</p><div id="archive-grid" class="archive-grid"></div></section>
+<section id="archive-panel" hidden><div class="section-heading"><h2>每一天，都有脈絡。</h2><span id="archive-stats" class="label"></span></div><p class="muted">按日期回看每期簡報，同日不同版本各自保留。可調整圖卡大小，點選簡報閱讀。</p>
+<div class="calendar-toolbar"><div class="month-controls"><button id="month-prev" class="icon-button" aria-label="上一個月">←</button><label class="sr-only" for="archive-month">選擇簡報月份</label><input id="archive-month" type="month"><button id="month-next" class="icon-button" aria-label="下一個月">→</button><button id="month-latest" class="text-button">最新月份</button></div><div class="calendar-zoom"><label for="archive-zoom">圖卡大小</label><span aria-hidden="true">−</span><input id="archive-zoom" type="range" min="80" max="140" step="20" value="100"><span aria-hidden="true">＋</span><output id="archive-zoom-value" for="archive-zoom">100%</output></div></div>
+<p class="calendar-hint muted" id="calendar-hint">放大後可在月曆內橫向捲動；空白日期代表尚無簡報。</p>
+<div id="calendar-summary" class="sr-only" role="status" aria-atomic="true"></div>
+<div id="archive-grid" class="calendar-scroll" role="region" aria-label="歷史簡報月曆" aria-describedby="calendar-hint" tabindex="0"></div></section>
 <section id="stories-panel"><div class="feed-heading"><div><p class="eyebrow" id="feed-eyebrow">再多看一層</p><h2 id="feed-title">本期精選</h2></div><div class="feed-actions"><button id="read-all" class="text-button">閱讀整期 ↗</button><a id="download" class="text-button" download>下載 Markdown ↓</a></div></div>
 <div class="filter-row" role="group" aria-label="新聞分類"><button class="filter active" data-filter="all">全部 <span>20</span></button><button class="filter" data-filter="ai">AI / 開發 <span>5</span></button><button class="filter" data-filter="tech">科技 / 硬體 <span>5</span></button><button class="filter" data-filter="markets">市場 / ETF <span>5</span></button><button class="filter" data-filter="business">全球 / 商業 <span>5</span></button></div>
 <p id="results-note" role="status" class="muted results-note"></p><div id="stories" class="stories"></div><div id="empty" class="empty" hidden></div></section>
 <section id="tracking-panel" class="tracking-panel"><div class="section-heading"><h2>持續關注，才看得見變化。</h2><span class="label">持續追蹤</span></div><div id="tracking" class="tracking"></div></section>
 </div>
-<footer><div><strong>daily brief<span>.</span></strong><p>在資訊很多的世界，留一點時間理解。</p></div><p>公開靜態網站 · 無廣告 · 無追蹤器<br><span id="footer-meta"></span><br>歷史整理不是即時新聞。收藏只保存在此瀏覽器。</p></footer>
+<footer><div><strong>每日簡報</strong><p>在資訊很多的世界，留一點時間理解。</p></div><p>公開靜態網站 · 無廣告 · 無追蹤器<br><span id="footer-meta"></span><br>歷史整理不是即時新聞。收藏只保存在此瀏覽器。</p></footer>
 </main></div>
 <dialog id="reader" aria-labelledby="reader-title"><div class="reader-top"><span id="reader-category" class="label"></span><div><button id="reader-save" class="icon-button" aria-label="收藏這則新聞">☆</button><button id="share" class="text-button">複製連結</button><button id="close" class="icon-button" aria-label="關閉閱讀面板">×</button></div></div><div class="reader-content"><p id="reader-date" class="eyebrow"></p><h2 id="reader-title"></h2><div id="reader-warning" class="reader-warning"></div><article id="reader-body" class="prose"></article></div><div class="reader-bottom"><button id="reader-prev" class="text-button">← 上一則</button><span id="reader-position" class="label"></span><button id="reader-next" class="text-button">下一則 →</button></div></dialog>
 <div id="toast" role="status" class="toast" hidden></div>

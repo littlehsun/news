@@ -14,7 +14,7 @@
     root.dataset.theme = theme;
     root.dataset.themePreference = preference;
     const color = document.querySelector('meta[name="theme-color"]');
-    if (color) color.content = theme === 'dark' ? '#121a17' : '#f7f8f4';
+    if (color) color.content = theme === 'dark' ? '#171b25' : '#f8f7f4';
     document.querySelectorAll('[data-theme-choice]').forEach(button => {
       const selected = button.dataset.themeChoice === preference;
       button.setAttribute('aria-pressed', String(selected));

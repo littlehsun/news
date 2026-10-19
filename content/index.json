@@ -3,7 +3,7 @@
   "timezone": "Asia/Taipei",
   "archiveStart": "2026-10-01",
   "missingDates": [],
-  "importNote": "Historical AI-generated conversation briefings, structurally edited rather than verbatim exports; original source URLs unavailable; no renewed fact-check. Two October 3 editions are retained separately. Oct 2 and Oct 7 were separately backfilled on 2026-10-17 with newly researched public sources, not recovered original newsletters; these are clearly labeled retrospective editions.",
+  "importNote": "歷史 AI 對話簡報經結構整理，並非逐字匯出；原引用網址無法還原，未重新查核。2026-10-19 已將 10/3 統一以原第二版刊載，第一版保留於 Git 歷史，查核狀態維持不變。10/2 與 10/7 已於 2026-10-17 另依公開來源補上明確標示的回溯整理版，並非復原的原始簡報。",
   "editions": [
     {
       "id": "2026-10-19",
@@ -134,19 +134,11 @@
       "status": "unverified_archive"
     },
     {
-      "id": "2026-10-03-v2",
+      "id": "2026-10-03",
       "date": "2026-10-03",
-      "edition": "第二版",
+      "edition": "週六早報",
       "title": "企業 AI 缺的不是模型，而是部署能力",
-      "path": "content/2026/10/2026-10-03-v2.md",
-      "status": "unverified_archive"
-    },
-    {
-      "id": "2026-10-03-v1",
-      "date": "2026-10-03",
-      "edition": "第一版",
-      "title": "長時程 Agent、光子記憶體與就業降溫",
-      "path": "content/2026/10/2026-10-03-v1.md",
+      "path": "content/2026/10/2026-10-03.md",
       "status": "unverified_archive"
     },
     {

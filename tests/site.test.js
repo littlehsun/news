@@ -31,9 +31,14 @@ test('all indexed editions have exactly 20 stories, four groups, three highlight
   }
 });
 
-test('archive retains both October 3 editions and explicit missing dates', () => {
-  assert.ok(index.editions.some(e => e.id === '2026-10-03-v1'));
-  assert.ok(index.editions.some(e => e.id === '2026-10-03-v2'));
+test('October 3 has one disclosed edition and missing dates remain explicit', () => {
+  const editions = index.editions.filter(e => e.date === '2026-10-03');
+  assert.equal(editions.length, 1);
+  assert.equal(editions[0].id, '2026-10-03');
+  assert.equal(editions[0].status, 'unverified_archive');
+  const raw = fs.readFileSync(path.join(root, editions[0].path), 'utf8');
+  assert.ok(raw.includes('原第一版保留於'));
+  assert.ok(raw.includes('版本整理：2026-10-19'));
   for (const date of index.missingDates) assert.ok(!index.editions.some(e => e.date === date));
 });
 
