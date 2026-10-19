@@ -42,6 +42,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 .topbar-label{font-size:12px;letter-spacing:.8px;color:var(--muted)}.topbar-label span{margin:0 12px;color:var(--line)}
 .search-box{width:330px;display:flex;gap:10px;align-items:center;border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:0 12px;color:var(--muted);min-height:44px}
 .search-box input{width:100%;min-width:0;color:var(--ink);background:none;border:0;font-size:13px;padding:10px 0}.search-box input::placeholder{color:var(--muted)}
+.search-box:focus-within{border-color:var(--green);outline:2px solid var(--green);outline-offset:2px}.search-box input:focus-visible{outline:none}
 .search-box kbd{font:12px var(--sans);padding:1px 6px;border:1px solid var(--line);border-radius:3px}.menu-button{display:none!important}
 .icon-button{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;flex:none;border:1px solid var(--line);background:var(--panel);border-radius:6px;font-size:20px}.icon-button:hover{background:var(--soft)}
 main{max-width:1280px;margin:auto;padding:36px 40px 32px;outline:none}
